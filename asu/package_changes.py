@@ -59,6 +59,11 @@ def apply_package_changes(build_request: BuildRequest):
             build_request.packages.remove("auc")
             _add_if_missing("owut")
 
+    if build_request.version.startswith("25.12"):
+        # lantiq/xrx200 specific changes
+        if build_request.target == "lantiq/xrx200":
+            _add_if_missing("kmod-dsa-gswip")
+
     # TODO: if we ever fully implement 'packages_versions', this needs rework
     for version, packages in language_packs.items():
         if build_request.version >= version:  # Includes snapshots
